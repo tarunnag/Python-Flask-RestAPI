@@ -1,0 +1,33 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.8 # Specify your Python version
+    commands:
+      - echo Installing dependencies...
+      - pip install --upgrade pip
+      - pip install -r requirements.txt
+      - apt-get update -y && apt-get install -y docker.io # Install Docker
+
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 585768149561.dkr.ecr.ap-south-1.amazonaws.com/python-image)
+      - echo Build started on `date`
+
+  build:
+    commands:
+      - echo Building the Docker image...
+      - docker build -t python .
+      - docker tag python:latest 585768149561.dkr.ecr.ap-south-1.amazonaws.com/python-image:latest
+
+  post_build:
+    commands:
+      - echo Pushing the Docker image to ECR...
+      - docker push 585768149561.dkr.ecr.ap-south-1.amazonaws.com/python-image:latest
+      - echo Build completed on `date`
+
+artifacts:
+  files:
+    - '**/*'

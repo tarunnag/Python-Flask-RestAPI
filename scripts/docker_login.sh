@@ -5,4 +5,4 @@ aws ecr get-login-password --region ap-south-1 | docker login --username AWS --p
 #!/bin/bash
 rm -f /home/ubuntu/appspec.yml
 rm -f /home/ubuntu/buildspec.yml
-rmdir -r /home/ubuntu/scripts
+rm -rf /home/ubuntu/scripts

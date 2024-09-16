@@ -1,13 +1,13 @@
 #!/bin/bash
 set -e
 
-docker-compose down
-docker-compose up -d
+/usr/local/bin/docker-compose down
+/usr/local/bin/docker-compose up -d
 sleep 60
 
 
-docker-compose -f docker-compose1.yml down
-docker-compose -f docker-compose1.yml up -d
+/usr/local/bin/docker-compose -f docker-compose1.yml down
+/usr/local/bin/docker-compose -f docker-compose1.yml up -d
 sleep 60
 
 

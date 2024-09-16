@@ -13,14 +13,14 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - $(aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 585768149561.dkr.ecr.ap-south-1.amazonaws.com/python-image)
+      - $(aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 585768149561.dkr.ecr.ap-south-1.amazonaws.com)
       - echo Build started on `date`
 
   build:
     commands:
       - echo Building the Docker image...
-      - docker build -t python .
-      - docker tag python:latest 585768149561.dkr.ecr.ap-south-1.amazonaws.com/python-image:latest
+      - docker build -t python-image .
+      - docker tag python-image:latest 585768149561.dkr.ecr.ap-south-1.amazonaws.com/python-image:latest
 
   post_build:
     commands:

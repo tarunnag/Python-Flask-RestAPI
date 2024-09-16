@@ -1,0 +1,24 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ubuntu/
+
+hooks:
+  BeforeInstall:
+    - location: scripts/docker_login.sh
+      timeout: 300
+      runas: ubuntu
+
+  ApplicationStart:
+    - location: scripts/docker_container&start.sh
+      timeout: 300
+      runas: ubuntu
+    - location: scripts/docker_container&start1.sh
+      timeout: 300
+      runas: ubuntu
+
+  ValidateService:
+    - location: scripts/validate.sh
+      timeout: 300
+      runas: ubuntu

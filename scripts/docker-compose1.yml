@@ -1,8 +1,9 @@
 version: '3.8'
 
 services:
-  web:
+  pythonapp1:
     image: 585768149561.dkr.ecr.ap-south-1.amazonaws.com/python-image:latest
     ports:
       - "5001:5000" 
     container_name: python-app-1
+    command: gunicorn -w 4 -b 0.0.0.0:5000 app:app

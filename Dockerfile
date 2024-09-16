@@ -4,6 +4,8 @@ WORKDIR /opt/app
 
 COPY . .
 
+RUN pip install gunicorn
+
 RUN pip install --no-cache-dir -r requirements-prod.txt
 
 EXPOSE 5000

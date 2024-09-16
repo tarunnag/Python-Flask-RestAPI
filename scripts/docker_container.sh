@@ -1,7 +1,4 @@
-#!/bin/bash
-rm -f /home/ubuntu/appspec.yml
-rm -f /home/ubuntu/buildspec.yml
-rmdir -r /home/ubuntu/scripts
+
 
 
 docker-compose down

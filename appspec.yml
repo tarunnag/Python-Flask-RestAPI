@@ -8,17 +8,17 @@ hooks:
   BeforeInstall:
     - location: scripts/docker_login.sh
       timeout: 300
-      runas: ubuntu
+      runas: root
 
   ApplicationStart:
     - location: scripts/docker_container&start.sh
       timeout: 300
-      runas: ubuntu
-    - location: scripts/docker_container&start1.sh
-      timeout: 300
-      runas: ubuntu
+      runas: root
+#    - location: scripts/docker_container&start1.sh
+#      timeout: 300
+#      runas: root
 
   ValidateService:
     - location: scripts/validate.sh
       timeout: 300
-      runas: ubuntu
+      runas: root

@@ -1,6 +1,6 @@
 
-CONTAINER_NAME="python-app"  # Replace with your container's name
-CONTAINER_NAME1="python-app-1"
+CONTAINER_NAME="python-container"  # Replace with your container's name
+CONTAINER_NAME1="python-container1"
 
 container_id=$(docker ps -q -f name=$CONTAINER_NAME)
 container_id_1=$(docker ps -q -f name=$CONTAINER_NAME1)

@@ -14,13 +14,13 @@ set -e
 #!/bin/sh
 
 # Replace 'image_name' with the name of the Docker image you're looking for
-IMAGE_NAME="pull 585768149561.dkr.ecr.ap-south-1.amazonaws.com/python-image"
+IMAGE_NAME="585768149561.dkr.ecr.ap-south-1.amazonaws.com/python-image"
 
 # Check if the image exists
 if [ "$(docker images -q $IMAGE_NAME)" ]; then
   echo "Docker image $IMAGE_NAME exists."
   docker rmi $IMAGE_NAME:latest
-  docker pull 585768149561.dkr.ecr.ap-south-1.amazonaws.com/python-image:latest
+  docker pull $IMAGE_NAME:latest
 else
   echo "Docker image $IMAGE_NAME does not exist."
   docker pull 585768149561.dkr.ecr.ap-south-1.amazonaws.com/python-image:latest

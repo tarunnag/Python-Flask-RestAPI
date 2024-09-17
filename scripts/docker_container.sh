@@ -34,7 +34,7 @@ CONTAINER_NAME="python-container"
 if [ "$(docker ps -a --filter "name=$CONTAINER_NAME" --format '{{.Names}}')" ]; then
   echo "Container $CONTAINER_NAME exists."
   docker container stop python-container || true
-  docker rm python-conatiner || true  
+  docker rm python-container || true  
   docker run -d -p 5001:5000 --name python-container 585768149561.dkr.ecr.ap-south-1.amazonaws.com/python-image:latest
 else
   echo "Container $CONTAINER_NAME does not exist."

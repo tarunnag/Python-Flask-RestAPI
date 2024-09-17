@@ -13,53 +13,39 @@ set -e
 
 #!/bin/sh
 
-# Replace 'image_name' with the name of the Docker image you're looking for
+
 IMAGE_NAME="585768149561.dkr.ecr.ap-south-1.amazonaws.com/python-image"
-
-# Check if the image exists
-if [ "$(docker images -q $IMAGE_NAME)" ]; then
-  echo "Docker image $IMAGE_NAME exists."
-  docker rmi $IMAGE_NAME:latest
-  docker pull $IMAGE_NAME:latest
-else
-  echo "Docker image $IMAGE_NAME does not exist."
-  docker pull 585768149561.dkr.ecr.ap-south-1.amazonaws.com/python-image:latest
-fi
-
-
-
 CONTAINER_NAME="python-container"
-
-# Check if the container exists (both running and stopped containers)
-if [ "$(docker ps -a --filter "name=$CONTAINER_NAME" --format '{{.Names}}')" ]; then
-  echo "Container $CONTAINER_NAME exists."
-  docker container stop python-container || true
-  docker rm python-container || true  
-  docker run -d -p 5001:5000 --name python-container 585768149561.dkr.ecr.ap-south-1.amazonaws.com/python-image:latest
-else
-  echo "Container $CONTAINER_NAME does not exist."
-  docker run -d -p 5001:5000 --name python-container 585768149561.dkr.ecr.ap-south-1.amazonaws.com/python-image:latest
-fi
-
-sleep 30
-#!/bin/sh
-
-# Replace 'container_name' with the name or ID of your container
 CONTAINER_NAME_1="python-container1"
 
-# Check if the container exists (both running and stopped containers)
-if [ "$(docker ps -a --filter "name=$CONTAINER_NAME_1" --format '{{.Names}}')" ]; then
-  echo "Container $CONTAINER_NAME_1 exists."
-  docker container stop python-container1 || true
-  docker rm python-container1 || true
-  docker run -d -p 5000:5000 --name python-container1 585768149561.dkr.ecr.ap-south-1.amazonaws.com/python-image:latest
-else
-  echo "Container $CONTAINER_NAME_1 does not exist."
-  docker run -d -p 5000:5000 --name python-container1 585768149561.dkr.ecr.ap-south-1.amazonaws.com/python-image:latest
+if [ "$(docker ps -a --filter "name=$CONTAINER_NAME" --format '{{.Names}}')" ]; then
+  echo "Stopping and removing $CONTAINER_NAME..."
+  docker container stop $CONTAINER_NAME || true
+  docker rm $CONTAINER_NAME || true
 fi
+
+if [ "$(docker ps -a --filter "name=$CONTAINER_NAME_1" --format '{{.Names}}')" ]; then
+  echo "Stopping and removing $CONTAINER_NAME_1..."
+  docker container stop $CONTAINER_NAME_1 || true
+  docker rm $CONTAINER_NAME_1 || true
+fi
+
+if [ "$(docker images -q $IMAGE_NAME)" ]; then
+  echo "Docker image $IMAGE_NAME exists. Removing the image..."
+  docker rmi -f $IMAGE_NAME:latest
+fi
+
+echo "Pulling latest image..."
+docker pull $IMAGE_NAME:latest
+
+
+echo "Starting $CONTAINER_NAME..."
+docker run -d -p 5001:5000 --name $CONTAINER_NAME $IMAGE_NAME:latest
 
 sleep 30
 
+echo "Starting $CONTAINER_NAME_1..."
+docker run -d -p 5000:5000 --name $CONTAINER_NAME_1 $IMAGE_NAME:latest
 
 
 
